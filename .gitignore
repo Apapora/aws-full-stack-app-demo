@@ -158,3 +158,6 @@ sketch
 
 #Configs
 assets/src/config*
+
+#Terraform
+terraform/*.tfvars

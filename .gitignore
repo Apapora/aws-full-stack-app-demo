@@ -156,8 +156,9 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,node
 
-#Configs
+#Configs/Build
 assets/src/config*
+assets/build*
 
 #Terraform
 terraform/*.tfvars

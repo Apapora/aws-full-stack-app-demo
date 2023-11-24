@@ -12,14 +12,14 @@ interface HomeProps {
 
 interface HomeState {
   isLoading: boolean;
-  goals: Goal[];
+  messages: Message[];
   redirect: boolean;
 }
 
-interface Goal {
+interface Message {
   content: string;
-  goalId: string;
-  title: string;
+  messageId: string;
+  //title: string;
   createdAt: Date;
 }
 
@@ -29,7 +29,7 @@ export default class Home extends Component<HomeProps, HomeState> {
 
     this.state = {
       isLoading: true,
-      goals: [],
+      messages: [],
       redirect: false,
     };
   }
@@ -40,8 +40,8 @@ export default class Home extends Component<HomeProps, HomeState> {
     }
 
     try {
-      const goals = await this.goals();
-      this.setState({ goals });
+      const messages = await this.messages();
+      this.setState({ messages });
     } catch (e) {
       alert(e);
     }
@@ -49,19 +49,18 @@ export default class Home extends Component<HomeProps, HomeState> {
     this.setState({ isLoading: false });
   }
 
-  goals() {
-    return API.get("goals", "/goals", null);
+  messages() {
+    return API.get("messages", "/message", null);
   }
 
-  renderGoalsList(goals: Goal[]) {
-    let goalsList: Goal[] = [];
+  renderMessagesList(messages: Message[]) {
+    let messagesList: Message[] = [];
 
-    return goalsList.concat(goals).map(
-      (goal, i) =>
-        <tr key={goal.goalId}>
-          <td><a href={`/goal/${goal.goalId}`}>{goal.title}</a></td>
-          <td><div className="description">{goal.content.trim().split("\n")[0]}</div></td>
-          <td>{new Date(goal.createdAt).toLocaleString()}</td>
+    return messagesList.concat(messages).map(
+      (message, i) =>
+        <tr key={message.messageId}>
+          <td><div className="description">{message.content.trim().split("\n")[0]}</div></td>
+          <td>{new Date(message.createdAt).toLocaleString()}</td>
         </tr>
     );
   }
@@ -73,11 +72,11 @@ export default class Home extends Component<HomeProps, HomeState> {
   renderLanding() {
     return (
       <div className="lander">
-        <h2>AWS Goals App</h2>
+        <h2>Answering Machine App</h2>
         <hr />
-        <p>This is a sample application that creates a simple CRUD (create, read, update, delete) app, and provides the foundational services, components, and plumbing needed to get a basic web application up and running. In this "goals" app, users can create goals, add descriptions, and update or remove their goals. You can get this sample application up and running in your own environment and learn more about the architecture of the app by looking at the <a className="orange-link" href="https://github.com/awslabs/aws-full-stack-template" target="_blank">github repository</a>.</p>
+        <p>This is an application where users can leave me a message on my answering machine. More info can be found on the <a className="orange-link" href="https://github.com/awslabs/aws-full-stack-template" target="_blank">github repository</a>.</p>
         <div className="button-container col-md-12">
-          <a href="/signup" className="orange-link">Sign up to explore the demo</a>
+          <a href="/signup" className="orange-link">Sign up or log in to leave a message</a>
         </div>
         <img src={fullStack} className="img-fluid full-width" alt="Screenshot"></img>
       </div>);
@@ -86,15 +85,14 @@ export default class Home extends Component<HomeProps, HomeState> {
   renderHome() {
     return (
       <div className="goals">
-        <h1 className="text-center">Goals</h1>
+        <h1 className="text-center">Leave me a message...</h1>
         <div className="mb-3 float-right">
-          <Button variant="primary" onClick={this.onCreate}>Create new goal</Button>
+          <Button variant="primary" onClick={this.onCreate}>Send new message</Button>
         </div>
         <Table variant="dark'">
           <thead>
             <tr>
-              <th>Goal name</th>
-              <th>Description</th>
+              <th>Message Content</th>
               <th>Date created</th>
             </tr>
           </thead>
@@ -106,7 +104,7 @@ export default class Home extends Component<HomeProps, HomeState> {
                     <Spinner animation="border" className="center-spinner" />
                   </td></tr>
                 ) :
-                this.renderGoalsList(this.state.goals)
+                this.renderMessagesList(this.state.messages)
             }
           </tbody>
         </Table>
@@ -117,7 +115,7 @@ export default class Home extends Component<HomeProps, HomeState> {
   render() {
     let { redirect } = this.state;
     if (redirect) {
-      return <Redirect push to={'/goal/'} />;
+      return <Redirect push to={'/message/'} />;
     }
 
     return (

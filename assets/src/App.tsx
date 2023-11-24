@@ -23,7 +23,7 @@ class App extends Component<AppProps, AppState> {
       isAuthenticating: true
     };
 
-    document.title = "Goals"
+    document.title = "Howdy"
   }
 
   async componentDidMount() {
@@ -75,7 +75,7 @@ class App extends Component<AppProps, AppState> {
       !this.state.isAuthenticating &&
       <div className="App container">
         <Navbar navbar-light="true" className="mb-3 navbar">
-          <Navbar.Brand href="/">AWS Full-Stack Template</Navbar.Brand>
+          <Navbar.Brand href="/">You've reached my answering machine</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse>
             <Nav className="ml-auto">

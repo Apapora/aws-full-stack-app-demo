@@ -5,6 +5,7 @@ import Home from "./modules/signup/Home";
 import Login from "./modules/signup/Login";
 import Signup from "./modules/signup/Signup";
 import AddEditGoal from "./modules/goal/AddEditGoal";
+import AddMessage from "./modules/message/AddMessage";
 import NotFound from "./modules/notFound/NotFound";
 
 interface RouteProps {
@@ -12,11 +13,12 @@ interface RouteProps {
   userHasAuthenticated: (authenticated: boolean) => void;
 }
 
-export const Routes: React.SFC<RouteProps> = (childProps) =>
+export const Routes: React.FunctionComponent<RouteProps> = (childProps) =>
   <Switch>
     <PropsRoute path="/" exact component={Home} props={childProps} />
     <PropsRoute path="/login" exact component={Login} props={childProps} />
     <PropsRoute path="/signup" exact component={Signup} props={childProps} />
     <Route path="/goal/:id?" exact component={AddEditGoal} props={childProps} />
+    <Route path="/message/:id?" exact component={AddMessage} props={childProps} />
     <Route component={NotFound} />
   </Switch>;

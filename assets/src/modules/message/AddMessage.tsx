@@ -100,7 +100,7 @@ export default class AddMessage extends Component<AddMessageProps, AddMessageSta
       isUpdating: true,
     });
     event.preventDefault();
-    this.state.isExistingGoal ? this.updateGoal() : this.saveGoal();
+    this.postMessage();
   }
 /*
   updateGoal = () => {
@@ -118,12 +118,12 @@ export default class AddMessage extends Component<AddMessageProps, AddMessageSta
     });
   }
 */
-  saveGoal = () => {
-    const { goal } = this.state;
-    return API.post("goals", "/goals", {
+  postMessage = () => {
+    const { message } = this.state;
+    return API.post("messages", "/message", {
       body: {
-        title: goal.title,
-        content: goal.content
+        //title: goal.title,
+        content: message.content
       }
     }).then((value: any) => {
       this.setState({
@@ -182,50 +182,29 @@ export default class AddMessage extends Component<AddMessageProps, AddMessageSta
   }
 */
   render() {
-    const { goal, isExistingGoal, showDeleteModal, redirect } = this.state;
+    const { message, redirect } = this.state;
 
     if (redirect) {
       return <Redirect push to={redirect} />;
     }
 
     return (
-      <div className="goal">
-        {this.state.isLoading ? 
-          <Spinner animation="border" className="center-spinner" /> : 
-
+      <div className="goal"> 
           <Form noValidate onSubmit={this.handleSubmit}>
 
             <div className="form-body">
-              <FormGroup className="blinking-cursor">
-                <FormLabel>Goal title</FormLabel>
-                <FormControl id="title"
-                  onChange={this.handleChange}
-                  value={goal.title}
-                  minLength={1}
-                  isValid={goal.title.length > 0}
-                  placeholder="Enter goal title.."
-                  required />
-              </FormGroup>
-
               <FormGroup >
-                <FormLabel>Goal description</FormLabel>
+                <FormLabel>Sorry I missed you. Please leave me a message below.</FormLabel>
                 <FormControl id="content"
                   onChange={this.handleChange}
-                  value={goal.content}
+                  value={message.content}
                   minLength={1}
-                  isValid={goal.content.length > 0}
-                  placeholder="Enter goal description.."
+                  isValid={message.content.length > 1 && message.content.length < 100}
+                  placeholder="Enter your message here."
                   as="textarea"
                   required />
               </FormGroup>
             </div>
-
-            {isExistingGoal &&
-              <Button
-                variant="outline-danger"
-                onClick={() => this.showDeleteModal(true)}>
-                Delete
-              </Button>}
 
             <Button
               variant="primary"
@@ -234,8 +213,8 @@ export default class AddMessage extends Component<AddMessageProps, AddMessageSta
               className="float-right"
               onClick={this.handleSubmit}>
               {this.state.isUpdating ?
-                <span><Spinner size="sm" animation="border" className="mr-2" />{isExistingGoal ? 'Updating' : 'Creating'}</span> :
-                <span>{isExistingGoal ? 'Update goal' : 'Create goal'}</span>}
+                <span><Spinner size="sm" animation="border" className="mr-2" />{'Sending'}</span> :
+                <span>{'Send message'}</span>}
             </Button>
 
             <Button
@@ -244,10 +223,8 @@ export default class AddMessage extends Component<AddMessageProps, AddMessageSta
               className="float-right">
               Cancel
             </Button>
-          </Form>}
+          </Form>
 
-        {showDeleteModal && this.deleteModal()}
-        
       </div>
     );
   }

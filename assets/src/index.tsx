@@ -20,7 +20,7 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: "goals",
+        name: "messages",
         endpoint: config.apiGateway.API_URL,
         region: config.apiGateway.REGION
       },

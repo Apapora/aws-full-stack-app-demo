@@ -32,7 +32,7 @@ export default class Login extends React.Component<LoginProps, LoginState> {
     };
   }
 
-  onChange = (event: React.FormEvent<FormControlProps>) => {
+  onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
     this.setState({ ...this.state, [target.name]: target.value });
   }

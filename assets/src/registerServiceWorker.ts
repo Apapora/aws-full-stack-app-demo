@@ -17,7 +17,7 @@ const isLocalhost = Boolean(
     /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
   )
 );
-
+/*
 export default function register() {
   //if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   if (!process.env.PUBLIC_URL && process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {  
@@ -110,7 +110,7 @@ function checkValidServiceWorker(swUrl: string) {
       );
     });
 }
-
+*/
 export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
